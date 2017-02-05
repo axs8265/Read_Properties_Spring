@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<querys>
+	<query key="query1">
+<![CDATA[
+
+ SELECT PO_NBR, MVNDR_NBR FROM NZ1.PRTHD.TF_PO WHERE PO_NBR = '%s' AND LOC_NBR = '%s' WITH UR
+
+]]>
+	</query>
+	
+	<query key="query2">
+<![CDATA[
+
+SELECT T.PO_NBR, T.LOC_NBR, T.MVNDR_NBR, (
+	SELECT COUNT(*)
+      FROM NP1.QA1MM.CRE_CONFG_PARM
+      WHERE CRE_CONFG_PARM_CD = 310
+      AND PARM_INTG_VAL = T.MVNDR_NBR
+      AND PARM_DEC_VAL = T.LOC_NBR
+	) AS PILOT_CNT
+FROM NP1.QA1MM.TF_PO T
+WHERE T.LOC_NBR='%s'
+AND T.LOC_TYP_CD = 'DC'
+AND T.PO_NBR= '%s'
+WITH UR
+
+]]>
+	</query>
+
+	<query key="query3">
+		<![CDATA[
+
+SELECT T.PO_NBR, T.LOC_NBR, T.SKU_NBR AS TFPOSKU
+	FROM NP1.QA1MM.TF_PO_SKU T
+	WHERE LOC_NBR = '%s'
+	AND LOC_TYP_CD = 'DC'
+	AND PO_NBR= '%s'
+	WITH UR
+]]>
+	</query>
+</querys>
